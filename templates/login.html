@@ -14,26 +14,46 @@
         
         <header class="exercise-header">
             <h1>🔑 Ejercicio 1: Login Bypass</h1>
-            <p>Aprende a evadir la autenticación usando SQL injection</p>
+            <p>Aprender a evadir la autenticación usando SQL injection</p>
         </header>
         
         <!-- Mostrar resultados si hay -->
         {% if success %}
-            <div class="result-box success">
-                <div class="result-icon">✅</div>
-                <div class="result-content">
-                    <h3>¡SQL Injection Exitoso!</h3>
-                    <div class="user-info">
-                        <p><strong>👤 Usuario:</strong> {{ user.username }}</p>
-                        <p><strong>📧 Email:</strong> {{ user.email }}</p>
-                        <p><strong>🎭 Rol:</strong> {{ user.role }}</p>
-                        <p><strong>🆔 ID:</strong> {{ user.id }}</p>
-                    </div>
-                    {% if message %}
+            {% if is_injection %}
+                <div class="result-box success">
+                    <div class="result-icon">⚠️</div>
+                    <div class="result-content">
+                        <h3>¡SQL Injection Exitoso!</h3>
+                        <div class="user-info">
+                            <p><strong>👤 Usuario:</strong> {{ user.username }}</p>
+                            <p><strong>📧 Email:</strong> {{ user.email }}</p>
+                            <p><strong>🎭 Rol:</strong> {{ user.role }}</p>
+                            <p><strong>🆔 ID:</strong> {{ user.id }}</p>
+                        </div>
                         <p class="success-message">{{ message }}</p>
-                    {% endif %}
+                        <div class="injection-warning">
+                            <strong>🚨 ATENCIÓN:</strong> Lograste acceder sin conocer la contraseña real usando técnicas de SQL injection.
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <div class="result-box success">
+                    <div class="result-icon">✅</div>
+                    <div class="result-content">
+                        <h3>Login Exitoso</h3>
+                        <div class="user-info">
+                            <p><strong>👤 Usuario:</strong> {{ user.username }}</p>
+                            <p><strong>📧 Email:</strong> {{ user.email }}</p>
+                            <p><strong>🎭 Rol:</strong> {{ user.role }}</p>
+                            <p><strong>🆔 ID:</strong> {{ user.id }}</p>
+                        </div>
+                        <p class="success-message">{{ message }}</p>
+                        <div class="normal-login">
+                            <strong>🔒 LOGIN NORMAL:</strong> Usaste credenciales válidas para acceder al sistema.
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         {% endif %}
         
         {% if error %}

@@ -1,5 +1,5 @@
 /* ===============================================
-   LABORATORIO SQL INJECTION - ESTILOS CSS
+   LABORATORIO SQL INJECTION - TEMA HACKER
    =============================================== */
 
 /* Reset básico */
@@ -10,22 +10,24 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
     line-height: 1.6;
-    color: #333;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #00ff41;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
     min-height: 100vh;
+    background-attachment: fixed;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background: white;
+    background: rgba(10, 10, 10, 0.95);
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+    border: 1px solid #00ff41;
 }
 
 /* ===============================================
@@ -36,29 +38,35 @@ body {
     text-align: center;
     margin-bottom: 30px;
     padding: 20px;
-    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-    color: white;
+    background: linear-gradient(135deg, #1a1a2e, #0f0f23);
+    color: #00ff41;
     border-radius: 10px;
+    border: 2px solid #00ff41;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
 }
 
 .header h1 {
     font-size: 2.5em;
     margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 0 10px #00ff41;
+    font-weight: bold;
 }
 
 .subtitle {
     font-size: 1.2em;
-    opacity: 0.9;
+    opacity: 0.8;
+    color: #00d4aa;
 }
 
 .exercise-header {
     text-align: center;
     margin-bottom: 30px;
     padding: 20px;
-    background: linear-gradient(135deg, #74b9ff, #0984e3);
-    color: white;
+    background: linear-gradient(135deg, #0f3460, #16213e);
+    color: #00d4aa;
     border-radius: 10px;
+    border: 2px solid #00d4aa;
+    box-shadow: 0 0 20px rgba(0, 212, 170, 0.2);
 }
 
 .navigation {
@@ -70,15 +78,18 @@ body {
     display: inline-block;
     margin: 0 10px;
     padding: 10px 20px;
-    background: #ddd;
-    color: #333;
+    background: #1a1a2e;
+    color: #00ff41;
     text-decoration: none;
     border-radius: 5px;
-    transition: background 0.3s;
+    border: 1px solid #00ff41;
+    transition: all 0.3s;
 }
 
 .back-link:hover {
-    background: #ccc;
+    background: #00ff41;
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
     transform: translateY(-2px);
 }
 
@@ -89,20 +100,24 @@ body {
 .warning-box {
     display: flex;
     align-items: center;
-    background: #fff3cd;
-    border: 2px solid #ffeaa7;
+    background: rgba(255, 193, 7, 0.1);
+    border: 2px solid #ffc107;
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 30px;
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.2);
 }
 
 .warning-icon {
     font-size: 2em;
     margin-right: 15px;
+    color: #ffc107;
+    animation: pulse 2s infinite;
 }
 
 .warning-text {
     flex: 1;
+    color: #ffc107;
 }
 
 .result-box {
@@ -111,17 +126,20 @@ body {
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 2px solid;
 }
 
 .result-box.success {
-    background: #d4edda;
-    border: 2px solid #00b894;
+    background: rgba(0, 255, 65, 0.1);
+    border-color: #00ff41;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
 }
 
 .result-box.error {
-    background: #f8d7da;
-    border: 2px solid #e17055;
+    background: rgba(255, 0, 65, 0.1);
+    border-color: #ff0041;
+    box-shadow: 0 0 20px rgba(255, 0, 65, 0.3);
 }
 
 .result-icon {
@@ -135,15 +153,17 @@ body {
 }
 
 .user-info {
-    background: rgba(255,255,255,0.8);
+    background: rgba(0, 0, 0, 0.5);
     padding: 15px;
     border-radius: 8px;
     margin-top: 15px;
+    border: 1px solid #00d4aa;
 }
 
 .user-info p {
     margin: 5px 0;
     font-weight: bold;
+    color: #00d4aa;
 }
 
 .success-message, .error-message {
@@ -151,9 +171,17 @@ body {
     margin-top: 10px;
 }
 
+.success-message {
+    color: #00ff41;
+}
+
+.error-message {
+    color: #ff0041;
+}
+
 .sql-tip {
     font-style: italic;
-    color: #666;
+    color: #00d4aa;
     margin-top: 10px;
 }
 
@@ -162,11 +190,12 @@ body {
    =============================================== */
 
 .form-container {
-    background: #f8f9fa;
+    background: rgba(26, 26, 46, 0.8);
     padding: 30px;
     border-radius: 10px;
     margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+    border: 1px solid #00ff41;
 }
 
 .form-group {
@@ -177,22 +206,31 @@ body {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    color: #333;
+    color: #00ff41;
+    text-shadow: 0 0 5px #00ff41;
 }
 
 .form-group input {
     width: 100%;
     padding: 12px;
-    border: 2px solid #ddd;
+    border: 2px solid #00d4aa;
     border-radius: 8px;
     font-size: 16px;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    background: rgba(0, 0, 0, 0.7);
+    color: #00ff41;
+    font-family: 'Consolas', monospace;
+    transition: all 0.3s;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #74b9ff;
-    box-shadow: 0 0 0 3px rgba(116, 185, 255, 0.1);
+    border-color: #00ff41;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.form-group input::placeholder {
+    color: rgba(0, 255, 65, 0.5);
 }
 
 /* ===============================================
@@ -202,7 +240,7 @@ body {
 .btn {
     display: inline-block;
     padding: 12px 24px;
-    border: none;
+    border: 2px solid;
     border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
@@ -211,26 +249,34 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     margin: 5px;
+    font-family: 'Consolas', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #74b9ff, #0984e3);
-    color: white;
+    background: transparent;
+    color: #00ff41;
+    border-color: #00ff41;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #0984e3, #74b9ff);
+    background: #00ff41;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(116, 185, 255, 0.4);
 }
 
 .btn-secondary {
-    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-    color: white;
+    background: transparent;
+    color: #00d4aa;
+    border-color: #00d4aa;
 }
 
 .btn-secondary:hover {
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    background: #00d4aa;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 212, 170, 0.5);
     transform: translateY(-2px);
 }
 
@@ -257,39 +303,43 @@ body {
 }
 
 .exercise-card {
-    background: white;
+    background: rgba(26, 26, 46, 0.8);
     border-radius: 15px;
     padding: 25px;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 2px solid #f1f2f6;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s;
+    border: 2px solid #00d4aa;
 }
 
 .exercise-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-    border-color: #74b9ff;
+    box-shadow: 0 0 30px rgba(0, 212, 170, 0.4);
+    border-color: #00ff41;
 }
 
 .exercise-icon {
     font-size: 3em;
     margin-bottom: 15px;
+    color: #00ff41;
+    text-shadow: 0 0 10px #00ff41;
 }
 
 .exercise-card h3 {
-    color: #333;
+    color: #00ff41;
     margin-bottom: 15px;
     font-size: 1.3em;
+    text-shadow: 0 0 5px #00ff41;
 }
 
 .exercise-details {
-    background: #f8f9fa;
+    background: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 8px;
     margin: 15px 0;
     font-size: 0.9em;
-    color: #666;
+    color: #00d4aa;
+    border: 1px solid #00d4aa;
 }
 
 /* ===============================================
@@ -297,53 +347,59 @@ body {
    =============================================== */
 
 .query-display {
-    background: #2d3436;
-    color: white;
+    background: #000;
+    color: #00ff41;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    border: 2px solid #00ff41;
 }
 
 .query-display h4 {
     margin-bottom: 15px;
-    color: #74b9ff;
+    color: #00d4aa;
+    text-shadow: 0 0 5px #00d4aa;
 }
 
 .query-box {
-    background: #1e272e;
+    background: rgba(0, 0, 0, 0.8);
     padding: 15px;
     border-radius: 8px;
-    border-left: 4px solid #00cec9;
+    border-left: 4px solid #00ff41;
     overflow-x: auto;
+    box-shadow: inset 0 0 10px rgba(0, 255, 65, 0.1);
 }
 
 .query-box code {
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Monaco', monospace;
     font-size: 14px;
-    color: #00cec9;
+    color: #00ff41;
     word-break: break-all;
+    text-shadow: 0 0 3px #00ff41;
 }
 
 .query-explanation {
     margin-top: 15px;
     font-style: italic;
-    color: #b2bec3;
+    color: #00d4aa;
 }
 
 .code-block {
-    background: #1e272e;
-    color: #00cec9;
+    background: #000;
+    color: #00ff41;
     padding: 15px;
     border-radius: 8px;
-    border-left: 4px solid #74b9ff;
+    border-left: 4px solid #00d4aa;
     margin: 15px 0;
     overflow-x: auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .code-block code {
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Monaco', monospace;
     font-size: 14px;
+    text-shadow: 0 0 3px #00ff41;
 }
 
 /* ===============================================
@@ -351,18 +407,20 @@ body {
    =============================================== */
 
 .help-section {
-    background: #f8f9fa;
+    background: rgba(15, 52, 96, 0.3);
     padding: 30px;
     border-radius: 15px;
     margin-bottom: 30px;
-    border: 2px solid #e9ecef;
+    border: 2px solid #00d4aa;
+    box-shadow: 0 0 20px rgba(0, 212, 170, 0.2);
 }
 
 .help-section h3 {
-    color: #2d3436;
+    color: #00ff41;
     margin-bottom: 25px;
     text-align: center;
     font-size: 1.5em;
+    text-shadow: 0 0 10px #00ff41;
 }
 
 .payload-category {
@@ -370,10 +428,11 @@ body {
 }
 
 .payload-category h4 {
-    color: #0984e3;
+    color: #00d4aa;
     margin-bottom: 15px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 2px solid #00d4aa;
+    text-shadow: 0 0 5px #00d4aa;
 }
 
 .payload-examples {
@@ -382,41 +441,46 @@ body {
 }
 
 .payload-item {
-    background: white;
+    background: rgba(0, 0, 0, 0.6);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    border-left: 4px solid #74b9ff;
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-left: 4px solid #00ff41;
+    transition: all 0.3s;
+    border: 1px solid rgba(0, 255, 65, 0.3);
 }
 
 .payload-item:hover {
     transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    border-color: #00ff41;
 }
 
 .payload-item code {
-    background: #1e272e;
-    color: #00cec9;
+    background: #000;
+    color: #00ff41;
     padding: 8px 12px;
     border-radius: 6px;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', monospace;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s;
     display: inline-block;
     margin: 5px 0;
+    border: 1px solid #00ff41;
+    text-shadow: 0 0 5px #00ff41;
 }
 
 .payload-item code:hover {
-    background: #0984e3;
-    color: white;
+    background: #00ff41;
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
 }
 
 .payload-item small {
     display: block;
     margin-top: 8px;
-    color: #666;
+    color: #00d4aa;
     font-style: italic;
 }
 
@@ -427,20 +491,23 @@ body {
 }
 
 .payload {
-    background: #1e272e;
-    color: #00cec9;
+    background: #000;
+    color: #00ff41;
     padding: 8px 12px;
     border-radius: 6px;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', monospace;
     font-size: 14px;
     cursor: pointer;
     transition: all 0.3s;
+    border: 1px solid #00ff41;
+    text-shadow: 0 0 3px #00ff41;
 }
 
 .payload:hover {
-    background: #74b9ff;
-    color: white;
+    background: #00ff41;
+    color: #000;
     transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
 }
 
 /* ===============================================
@@ -452,9 +519,10 @@ body {
 }
 
 .results-section h3 {
-    color: #2d3436;
+    color: #00ff41;
     margin-bottom: 20px;
     text-align: center;
+    text-shadow: 0 0 10px #00ff41;
 }
 
 .products-grid {
@@ -465,26 +533,27 @@ body {
 }
 
 .product-card {
-    background: white;
-    border: 2px solid #ddd;
+    background: rgba(26, 26, 46, 0.8);
+    border: 2px solid #00d4aa;
     border-radius: 12px;
     padding: 20px;
     transition: all 0.3s;
     position: relative;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .product-card:hover {
-    border-color: #74b9ff;
+    border-color: #00ff41;
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 0 25px rgba(0, 255, 65, 0.3);
 }
 
 .product-id {
     position: absolute;
     top: 10px;
     right: 15px;
-    background: #74b9ff;
-    color: white;
+    background: #00d4aa;
+    color: #000;
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 12px;
@@ -492,29 +561,33 @@ body {
 }
 
 .product-card h4 {
-    color: #2d3436;
+    color: #00ff41;
     margin-bottom: 10px;
     font-size: 1.2em;
+    text-shadow: 0 0 5px #00ff41;
 }
 
 .product-price {
     font-size: 1.4em;
     font-weight: bold;
-    color: #00b894;
+    color: #00d4aa;
     margin-bottom: 10px;
+    text-shadow: 0 0 5px #00d4aa;
 }
 
 .product-description {
-    color: #636e72;
+    color: #00ff41;
     font-size: 0.9em;
+    opacity: 0.8;
 }
 
 .no-results {
     text-align: center;
     padding: 40px;
-    background: #f8f9fa;
+    background: rgba(26, 26, 46, 0.5);
     border-radius: 10px;
-    color: #636e72;
+    color: #00d4aa;
+    border: 2px solid #00d4aa;
 }
 
 /* ===============================================
@@ -522,17 +595,19 @@ body {
    =============================================== */
 
 .reference-section {
-    background: #e8f4fd;
+    background: rgba(15, 52, 96, 0.2);
     padding: 25px;
     border-radius: 12px;
     margin-bottom: 30px;
-    border: 2px solid #74b9ff;
+    border: 2px solid #00d4aa;
+    box-shadow: 0 0 20px rgba(0, 212, 170, 0.2);
 }
 
 .reference-section h3 {
-    color: #0984e3;
+    color: #00d4aa;
     margin-bottom: 20px;
     text-align: center;
+    text-shadow: 0 0 10px #00d4aa;
 }
 
 .users-grid {
@@ -543,11 +618,13 @@ body {
 }
 
 .user-card {
-    background: white;
+    background: rgba(0, 0, 0, 0.6);
     padding: 15px;
     border-radius: 8px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid #00ff41;
+    color: #00ff41;
 }
 
 .products-reference ul {
@@ -559,18 +636,22 @@ body {
 .products-reference li {
     margin-bottom: 10px;
     padding: 8px;
-    background: white;
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 6px;
     break-inside: avoid;
+    color: #00d4aa;
+    border-left: 3px solid #00ff41;
 }
 
 .reference-note {
-    background: rgba(255,255,255,0.8);
+    background: rgba(0, 0, 0, 0.5);
     padding: 15px;
     border-radius: 8px;
     margin-top: 15px;
     font-style: italic;
     text-align: center;
+    color: #00d4aa;
+    border: 1px solid #00d4aa;
 }
 
 .info-grid {
@@ -580,17 +661,19 @@ body {
 }
 
 .info-card {
-    background: white;
+    background: rgba(0, 0, 0, 0.6);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid #00d4aa;
 }
 
 .info-card h4 {
-    color: #0984e3;
+    color: #00ff41;
     margin-bottom: 15px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 2px solid #00d4aa;
+    text-shadow: 0 0 5px #00ff41;
 }
 
 .info-card ul {
@@ -599,7 +682,8 @@ body {
 
 .info-card li {
     padding: 8px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(0, 212, 170, 0.3);
+    color: #00d4aa;
 }
 
 .info-card li:last-child {
@@ -611,24 +695,27 @@ body {
    =============================================== */
 
 .explanation-section {
-    background: #f1f2f6;
+    background: rgba(26, 26, 46, 0.3);
     padding: 30px;
     border-radius: 15px;
     margin-bottom: 30px;
-    border: 2px solid #ddd;
+    border: 2px solid #00ff41;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
 }
 
 .explanation-section h3 {
-    color: #2d3436;
+    color: #00ff41;
     margin-bottom: 25px;
     text-align: center;
     font-size: 1.5em;
+    text-shadow: 0 0 10px #00ff41;
 }
 
 .explanation-content h4 {
-    color: #0984e3;
+    color: #00d4aa;
     margin: 20px 0 10px 0;
     font-size: 1.2em;
+    text-shadow: 0 0 5px #00d4aa;
 }
 
 .explanation-content ul {
@@ -637,15 +724,16 @@ body {
 
 .explanation-content li {
     margin-bottom: 8px;
-    color: #555;
+    color: #00ff41;
 }
 
 .attack-example {
-    background: #fff5f5;
-    border: 2px solid #ff7675;
+    background: rgba(255, 0, 65, 0.1);
+    border: 2px solid #ff0041;
     border-radius: 10px;
     padding: 20px;
     margin: 20px 0;
+    box-shadow: 0 0 20px rgba(255, 0, 65, 0.2);
 }
 
 /* ===============================================
@@ -665,16 +753,17 @@ body {
 .objective {
     display: flex;
     align-items: center;
-    background: white;
+    background: rgba(0, 0, 0, 0.6);
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    border-left: 4px solid #74b9ff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    border-left: 4px solid #00ff41;
+    border: 1px solid rgba(0, 255, 65, 0.3);
 }
 
 .objective-number {
-    background: #74b9ff;
-    color: white;
+    background: #00ff41;
+    color: #000;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -685,15 +774,17 @@ body {
     font-size: 1.2em;
     margin-right: 15px;
     flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
 }
 
 .objective h4 {
-    color: #2d3436;
+    color: #00ff41;
     margin-bottom: 5px;
+    text-shadow: 0 0 3px #00ff41;
 }
 
 .objective p {
-    color: #636e72;
+    color: #00d4aa;
     font-size: 0.9em;
 }
 
@@ -702,17 +793,19 @@ body {
    =============================================== */
 
 .cheatsheet {
-    background: #f8f9fa;
+    background: rgba(26, 26, 46, 0.5);
     padding: 30px;
     border-radius: 15px;
     margin-bottom: 30px;
-    border: 2px solid #e9ecef;
+    border: 2px solid #00d4aa;
+    box-shadow: 0 0 20px rgba(0, 212, 170, 0.1);
 }
 
 .cheatsheet h2 {
     text-align: center;
     margin-bottom: 30px;
-    color: #2d3436;
+    color: #00ff41;
+    text-shadow: 0 0 10px #00ff41;
 }
 
 .payload-section {
@@ -720,10 +813,11 @@ body {
 }
 
 .payload-section h3 {
-    color: #0984e3;
+    color: #00d4aa;
     margin-bottom: 15px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 2px solid #00d4aa;
+    text-shadow: 0 0 5px #00d4aa;
 }
 
 /* ===============================================
@@ -731,11 +825,13 @@ body {
    =============================================== */
 
 .footer {
-    background: #2d3436;
-    color: white;
+    background: rgba(0, 0, 0, 0.9);
+    color: #00ff41;
     padding: 40px 0;
     border-radius: 15px;
     margin-top: 40px;
+    border: 2px solid #00ff41;
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
 }
 
 .footer-content {
@@ -746,8 +842,9 @@ body {
 }
 
 .footer-section h4 {
-    color: #74b9ff;
+    color: #00d4aa;
     margin-bottom: 15px;
+    text-shadow: 0 0 5px #00d4aa;
 }
 
 .footer-section ul {
@@ -759,20 +856,21 @@ body {
 }
 
 .footer-section a {
-    color: #b2bec3;
+    color: #00ff41;
     text-decoration: none;
-    transition: color 0.3s;
+    transition: all 0.3s;
 }
 
 .footer-section a:hover {
-    color: #74b9ff;
+    color: #00d4aa;
+    text-shadow: 0 0 5px #00d4aa;
 }
 
 .footer-bottom {
     text-align: center;
     padding-top: 20px;
-    border-top: 1px solid #636e72;
-    color: #b2bec3;
+    border-top: 1px solid #00d4aa;
+    color: #00d4aa;
 }
 
 /* ===============================================
@@ -848,7 +946,7 @@ body {
 }
 
 /* ===============================================
-   ANIMACIONES Y EFECTOS
+   ANIMACIONES Y EFECTOS HACKER
    =============================================== */
 
 @keyframes fadeIn {
@@ -861,13 +959,20 @@ body {
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% { text-shadow: 0 0 5px currentColor; }
+    50% { text-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
+    100% { text-shadow: 0 0 5px currentColor; }
 }
 
 .warning-icon {
     animation: pulse 2s infinite;
+}
+
+@keyframes matrixRain {
+    0% { transform: translateY(-100%); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
 }
 
 @keyframes slideIn {
@@ -883,6 +988,42 @@ body {
 .payload-item:nth-child(2) { animation-delay: 0.2s; }
 .payload-item:nth-child(3) { animation-delay: 0.3s; }
 .payload-item:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes glow {
+    0% { box-shadow: 0 0 5px currentColor; }
+    50% { box-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
+    100% { box-shadow: 0 0 5px currentColor; }
+}
+
+.exercise-card:hover .exercise-icon {
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+/* ===============================================
+   EFECTOS MATRIX Y CYBER
+   =============================================== */
+
+.header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 65, 0.1) 50%, transparent 70%);
+    animation: scanLine 3s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scanLine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.exercise-header {
+    position: relative;
+    overflow: hidden;
+}
 
 /* ===============================================
    UTILIDADES
@@ -907,37 +1048,128 @@ body {
 .exercise-card:hover .exercise-icon {
     transform: scale(1.1);
     transition: transform 0.3s;
+    color: #00d4aa;
 }
 
 .product-card:hover .product-price {
-    color: #00b894;
+    color: #00ff41;
     font-size: 1.5em;
     transition: all 0.3s;
 }
 
 /* ===============================================
-   DARK MODE SUPPORT (OPCIONAL)
+   SCROLLBAR PERSONALIZADA TEMA HACKER
    =============================================== */
 
-@media (prefers-color-scheme: dark) {
-    /* Si quieres implementar modo oscuro más adelante */
-}
-
-/* Scrollbar personalizado para Webkit */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #74b9ff;
+    background: linear-gradient(45deg, #00ff41, #00d4aa);
     border-radius: 4px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #0984e3;
+    background: linear-gradient(45deg, #00d4aa, #00ff41);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+}
+
+/* ===============================================
+   EFECTOS DE PARPADEO PARA ELEMENTOS CRÍTICOS
+   =============================================== */
+
+.injection-warning {
+    background: rgba(255, 0, 65, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ff0041;
+    margin-top: 15px;
+    animation: criticalBlink 2s infinite;
+}
+
+.normal-login {
+    background: rgba(0, 255, 65, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #00ff41;
+    margin-top: 15px;
+}
+
+@keyframes criticalBlink {
+    0%, 50% { opacity: 1; }
+    25%, 75% { opacity: 0.7; }
+}
+
+/* ===============================================
+   TERMINAL-STYLE INPUTS
+   =============================================== */
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    background: #000;
+    border: 1px solid #00ff41;
+    color: #00ff41;
+    text-shadow: 0 0 3px #00ff41;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus {
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+    text-shadow: 0 0 8px #00ff41;
+}
+
+/* ===============================================
+   LOADING EFFECTS
+   =============================================== */
+
+@keyframes loading {
+    0% { content: ""; }
+    25% { content: "."; }
+    50% { content: ".."; }
+    75% { content: "..."; }
+    100% { content: ""; }
+}
+
+.loading::after {
+    animation: loading 1s infinite;
+    color: #00ff41;
+}
+
+/* ===============================================
+   ACCESSIBILITY CON TEMA HACKER
+   =============================================== */
+
+a:focus, button:focus, input:focus {
+    outline: 2px solid #00ff41;
+    outline-offset: 2px;
+}
+
+/* ===============================================
+   PRINT STYLES (SI NECESITAN IMPRIMIR)
+   =============================================== */
+
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .container {
+        box-shadow: none !important;
+        border: 1px solid black !important;
+    }
+    
+    .header, .exercise-header {
+        background: white !important;
+        color: black !important;
+        border: 1px solid black !important;
+    }
 }

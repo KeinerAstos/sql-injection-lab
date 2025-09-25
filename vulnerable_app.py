@@ -25,7 +25,7 @@ if not os.path.exists('vulnerable_app.db'):
 @app.on_event("startup")
 async def startup_event():
     print("🚀 Laboratorio SQL Injection iniciado")
-    print("🌐 Accede a: http://localhost:8000")
+    print("🌐 Acceder a: http://localhost:8000")
     print("⚠️  ATENCIÓN: Esta aplicación es INTENCIONALMENTE vulnerable")
 
 # ============================================
@@ -47,15 +47,18 @@ async def login_form(request: Request):
 @app.post("/login")
 async def login_vulnerable(request: Request, username: str = Form(...), password: str = Form(...)):
     """
-    LOGIN VULNERABLE - Permite SQL Injection
-    
-    Vulnerabilidades:
-    - Concatenación directa de strings en SQL
-    - Sin validación de entrada
-    - Sin escape de caracteres especiales
+    LOGIN VULNERABLE - Permite SQL Injection pero diferencia entre normal y malicioso
     """
     conn = get_connection()
     cursor = conn.cursor()
+    
+    # Detectar si contiene caracteres sospechosos de SQL injection
+    is_sql_injection = ("'" in username or "'" in password or 
+                   "--" in username or "--" in password or
+                   "union" in username.lower() or "union" in password.lower() or
+                   "select" in username.lower() or "select" in password.lower() or
+                   " or " in username.lower() or " or " in password.lower() or
+                   " and " in username.lower() or " and " in password.lower())
     
     # 🚨 VULNERABLE: Concatenación directa de SQL
     query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
@@ -75,13 +78,28 @@ async def login_vulnerable(request: Request, username: str = Form(...), password
                 "email": result[3],
                 "role": result[4]
             }
-            return templates.TemplateResponse("login.html", {
-                "request": request, 
-                "success": True, 
-                "user": user_data,
-                "query": query,
-                "message": "¡Login exitoso! SQL Injection funcionó."
-            })
+            
+            # Determinar el tipo de mensaje basado en si fue SQL injection
+            if is_sql_injection:
+                # SQL Injection detectado
+                return templates.TemplateResponse("login.html", {
+                    "request": request, 
+                    "success": True, 
+                    "user": user_data,
+                    "query": query,
+                    "message": "¡SQL Injection funcionó! Lograste evadir la autenticación.",
+                    "is_injection": True
+                })
+            else:
+                # Login normal
+                return templates.TemplateResponse("login.html", {
+                    "request": request, 
+                    "success": True, 
+                    "user": user_data,
+                    "query": query,
+                    "message": "Login exitoso con credenciales válidas.",
+                    "is_injection": False
+                })
         else:
             # Credenciales incorrectas
             return templates.TemplateResponse("login.html", {
@@ -245,65 +263,6 @@ async def database_info():
     finally:
         conn.close()
 
-# ============================================
-# EJERCICIO BONUS: TIME-BASED INJECTION
-# ============================================
-@app.get("/product/{product_id}")
-async def get_product_vulnerable(request: Request, product_id: str):
-    """
-    TIME-BASED SQL INJECTION
-    Permite detectar información basándose en el tiempo de respuesta
-    """
-    import time
-    start_time = time.time()
-    
-    conn = get_connection()
-    cursor = conn.cursor()
-    
-    # 🚨 VULNERABLE: Permite funciones como SLEEP (en otros DBMS)
-    query = f"SELECT * FROM products WHERE id='{product_id}'"
-    
-    print(f"🔍 Query ejecutada: {query}")
-    
-    try:
-        cursor.execute(query)
-        result = cursor.fetchone()
-        
-        end_time = time.time()
-        response_time = round(end_time - start_time, 3)
-        
-        if result:
-            return JSONResponse({
-                "status": "found",
-                "product": {
-                    "id": result[0],
-                    "name": result[1],
-                    "price": result[2],
-                    "description": result[3]
-                },
-                "query": query,
-                "response_time_seconds": response_time
-            })
-        else:
-            return JSONResponse({
-                "status": "not_found",
-                "message": "Producto no encontrado",
-                "query": query,
-                "response_time_seconds": response_time
-            })
-            
-    except sqlite3.Error as e:
-        end_time = time.time()
-        response_time = round(end_time - start_time, 3)
-        
-        return JSONResponse({
-            "status": "error",
-            "message": str(e),
-            "query": query,
-            "response_time_seconds": response_time
-        })
-    finally:
-        conn.close()
 
 # ============================================
 # ENDPOINT PARA REINICIAR LA BASE DE DATOS
