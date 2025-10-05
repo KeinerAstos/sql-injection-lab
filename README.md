@@ -89,6 +89,11 @@ Ientificamos en el item 5 el resultado de la consulta
 ![alt text](image-6.png)
 
 ### 2.3 Blind SQL Injection
+```
+http://localhost:8000/user/1'%20AND%201=1%20--
+```
+![alt text](image-7.png)
+
 
 ## 3. Técnicas de Explotación y Evidencias
 [Screenshots y código de payloads utilizados]
