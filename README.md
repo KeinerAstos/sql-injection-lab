@@ -122,62 +122,51 @@ Vulnerabilidad (muy breve): Entrada concatenada en la consulta permite SQL Injec
 Información filtrada: Devuelve el username ("admin") y la consulta SQL completa, lo que facilita confirmar la existencia de filas, enumerar tablas/columnas y seguir explotando la base de datos.
 ``` 
 
-## 3. Análisis de Impacto y Contramedidas
-## 🧠 Análisis de Impacto y Contramedidas
+## 3. 🧠 Análisis de Impacto y Contramedidas 
 
-### 🔹 Ejercicio 1: Login Bypass
-**Impacto:**  
-Esta vulnerabilidad permite evadir los mecanismos de autenticación y acceder al sistema sin credenciales válidas. Un atacante puede iniciar sesión como cualquier usuario, incluso administrador, comprometiendo completamente la aplicación.  
 
-**Información filtrada:**  
-Credenciales de usuario, acceso no autorizado a paneles internos y potencial manipulación de datos.
+Ejercicio 1: Login Bypass
 
-**Contramedidas:**
-- Implementar **consultas parametrizadas (prepared statements)**.  
-- Validar y sanitizar todas las entradas de usuario.  
-- No mostrar mensajes de error específicos del sistema o base de datos.  
-- Implementar **bloqueo de cuenta** tras múltiples intentos fallidos.
+Impacto:
+Permite evadir la autenticación sin conocer las credenciales del usuario, accediendo al sistema como administrador o usuario válido.
+Contramedidas:
+
+-Usar consultas preparadas (Prepared Statements).
+-Validar y sanitizar la entrada del usuario.
+-Implementar límites de intentos de login.
+-Evitar mostrar mensajes que revelen información sobre el fallo de autenticación.
 
 ---
 
-### 🔹 Ejercicio 2: Union-Based Injection
-**Impacto:**  
-Permite a un atacante **extraer información confidencial** directamente de la base de datos combinando resultados legítimos con consultas inyectadas. Esto puede incluir usuarios, contraseñas, correos, y otros datos críticos.
+Ejercicio 2: Union-Based
 
-**Información filtrada:**  
-Tablas, nombres de columnas, y registros completos de bases de datos sensibles.
+Impacto:
+Permite extraer información confidencial de la base de datos combinando consultas, accediendo a datos como usuarios, contraseñas o correos.
+Contramedidas:
 
-**Contramedidas:**
-- Utilizar **ORMs seguros** o consultas preparadas.  
-- Restringir los permisos del usuario de base de datos utilizado por la aplicación.  
-- Validar los tipos de datos esperados (números, texto, etc.).  
-- Implementar un **firewall de aplicaciones web (WAF)**.
+-Implementar validación estricta de entradas.
+-Limitar los mensajes de error del servidor.
+-Usar ORM (Object-Relational Mapping) para manejar consultas.
+-Asignar privilegios mínimos a las cuentas de base de datos utilizadas por la aplicación.
 
 ---
 
-### 🔹 Ejercicio 3: Blind Injection
-**Impacto:**  
-Permite inferir información de la base de datos **sin recibir mensajes directos del servidor**, utilizando respuestas condicionales (verdadero/falso o tiempos de respuesta). Aunque más lenta, esta técnica puede revelar datos críticos de forma sigilosa.
+Ejercicio 3: Blind Injection
 
-**Información filtrada:**  
-Estructura de tablas, valores de campos sensibles (como contraseñas o tokens), y metadatos de la base de datos.
+Impacto:
+Aunque no se muestra información directa, el atacante puede deducir datos sensibles bit a bit o carácter por carácter, comprometiendo completamente la base de datos.
+Contramedidas:
 
-**Contramedidas:**
-- Usar **consultas parametrizadas** para todas las operaciones SQL.  
-- Implementar **límites de tiempo y detección de patrones anómalos** en las consultas.  
-- Ocultar detalles del sistema en los mensajes de error y respuestas del servidor.  
-- Aplicar **validación estricta del lado del servidor**.
+-Utilizar consultas parametrizadas.
+-Implementar un firewall de aplicaciones web (WAF).
+-Limitar el tiempo de respuesta y la información devuelta por errores.
+-Monitorear actividad inusual en las consultas SQL.
 
 ---
-## 5. Reflexión Ética del Equipo
-## 🤝 Reflexión Ética del Equipo
+5.🤝 Reflexión Ética del Equipo
 
-El equipo reconoce que las vulnerabilidades exploradas durante las prácticas, como la **inyección SQL**, tienen un gran impacto en la seguridad de los sistemas de información. Aunque estas técnicas pueden ser utilizadas con fines maliciosos, nuestro objetivo académico es **comprender su funcionamiento para prevenirlas y fortalecer la seguridad** en los entornos reales.
+El equipo reconoce que las vulnerabilidades exploradas durante las prácticas, como la inyección SQL, tienen un gran impacto en la seguridad de los sistemas de información. Aunque estas técnicas pueden ser utilizadas con fines maliciosos, nuestro objetivo académico es comprender su funcionamiento para prevenirlas y fortalecer la seguridad en entornos reales.
 
-Realizar pruebas de seguridad de forma responsable implica:
-- Actuar **solo en sistemas propios o con autorización explícita**.  
-- No divulgar información sensible obtenida durante pruebas.  
-- Aplicar los conocimientos adquiridos para **mejorar la protección de los datos** y no para explotarlos.  
-- Promover una **cultura ética y profesional** en el desarrollo de software seguro.  
+Realizar pruebas de seguridad de forma responsable implica actuar solo en sistemas propios o con autorización explícita, no divulgar información sensible obtenida durante pruebas, aplicar los conocimientos adquiridos para mejorar la protección de los datos y promover una cultura ética y profesional en el desarrollo de software seguro.
 
-En conclusión, **la seguridad informática es tanto una cuestión técnica como moral**. Comprender cómo ocurren los ataques nos convierte en mejores profesionales, responsables del diseño de sistemas más seguros y confiables.
+En conclusión, la seguridad informática es tanto una cuestión técnica como moral. Comprender cómo ocurren los ataques nos convierte en mejores profesionales, responsables del diseño de sistemas más seguros y confiables.
