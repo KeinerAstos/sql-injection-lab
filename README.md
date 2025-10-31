@@ -93,38 +93,52 @@ Ientificamos en el item 5 el resultado de la consulta
 ```
 http://localhost:8000/user/1'%20AND%20(SELECT%20SUBSTR(password,1,1)%20FROM%20users%20WHERE%20username='admin')='a'%20--
 ```
-![alt text](image-12.png)
+
 Vulnerabilidad (muy breve): SQL Injection — la aplicación concatena entradas en la consulta, permitiendo inyectar subconsultas (aquí SUBSTR(password,1,1)) para extraer datos carácter por carácter.
 
 Información que se está filtrando: ya se devuelve el username ("admin") y la inyección demuestra que se pueden obtener caracteres del campo password, por tanto el atacante puede leer la contraseña completa, enumerar tablas/columnas y acceder o modificar datos.
+
+![alt text](image-12.png)
+
+
+
 ```
 http://localhost:8000/user/admin'%20OR%20'1'='1-
 ```
-![alt text](image-9.png)
 Vulnerabilidad: La aplicación acepta y concatena entrada sin sanitizar en la consulta SQL, permitiendo SQL Injection — el atacante puede alterar la lógica de la consulta y eludir controles (por ejemplo, autenticación).
 
 Información filtrada: La respuesta revela el username ("admin") y la propia consulta SQL, confirmando la existencia del usuario y mostrando la estructura de la consulta; con esto un atacante podría leer otros registros, enumerar tablas y potencialmente modificar o borrar datos.
 
+![alt text](image-9.png)
+
+
+
 ```
 http://localhost:8000/user/'%20OR%201=1%20--
 ```
-![alt text](image-10.png)
+
 Vulnerabilidad (muy breve): La entrada id se concatena directamente en la consulta y el payload '' OR 1=1 -- convierte la condición en siempre verdadera y comenta el resto, permitiendo SQL Injection y eludir la autenticación.
 
 Información filtrada: La respuesta devuelve status, message y el username ("admin") y además muestra la consulta SQL completa, lo que revela la estructura de la consulta y facilita enumerar tablas/columnas o extraer/alterar datos adicionales.
+
+![alt text](image-10.png)
+
+
 ```
 http://localhost:8000/user/1'%20AND%20(SELECT%20COUNT(*)%20FROM%20users)%3E0%20--
 ```
-![alt text](image-11.png)
-ChatGPT Plus
-
 Vulnerabilidad (muy breve): Entrada concatenada en la consulta permite SQL Injection — el atacante inyecta una subconsulta ((SELECT COUNT(*) FROM users) > 0) para manipular la lógica y extraer/confirmar datos.
 
 Información filtrada: Devuelve el username ("admin") y la consulta SQL completa, lo que facilita confirmar la existencia de filas, enumerar tablas/columnas y seguir explotando la base de datos. 
 
-### 2.3 Blind SQL Injection 🧠 Análisis de Impacto y Contramedidas 
+![alt text](image-11.png)
 
-Ejercicio 1: Login Bypass
+
+
+### 3 Blind SQL Injection 🧠 Análisis de Impacto y Contramedidas 
+
+
+### Ejercicio 1: Login Bypass
 
 Impacto:
 Permite evadir la autenticación sin conocer las credenciales del usuario, accediendo al sistema como administrador o usuario válido.
@@ -164,9 +178,7 @@ Contramedidas:
 
 
 
-
- 
-### 5.🤝 Reflexión Ética del Equipo
+###  5.🤝 Reflexión Ética del Equipo
 
 El equipo reconoce que las vulnerabilidades exploradas durante las prácticas, como la inyección SQL, tienen un gran impacto en la seguridad de los sistemas de información. Aunque estas técnicas pueden ser utilizadas con fines maliciosos, nuestro objetivo académico es comprender su funcionamiento para prevenirlas y fortalecer la seguridad en entornos reales.
 
