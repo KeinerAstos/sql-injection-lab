@@ -121,8 +121,8 @@ Vulnerabilidad (muy breve): Entrada concatenada en la consulta permite SQL Injec
 
 Información filtrada: Devuelve el username ("admin") y la consulta SQL completa, lo que facilita confirmar la existencia de filas, enumerar tablas/columnas y seguir explotando la base de datos.
 ``` 
-
-## 3. 🧠 Análisis de Impacto y Contramedidas 
+``` 
+### 2.3 Blind SQL Injection 🧠 Análisis de Impacto y Contramedidas 
 
 
 Ejercicio 1: Login Bypass
@@ -136,9 +136,9 @@ Contramedidas:
 -Implementar límites de intentos de login.
 -Evitar mostrar mensajes que revelen información sobre el fallo de autenticación.
 
----
-
-Ejercicio 2: Union-Based
+``` 
+``` 
+### Ejercicio 2: Union-Based
 
 Impacto:
 Permite extraer información confidencial de la base de datos combinando consultas, accediendo a datos como usuarios, contraseñas o correos.
@@ -149,9 +149,11 @@ Contramedidas:
 -Usar ORM (Object-Relational Mapping) para manejar consultas.
 -Asignar privilegios mínimos a las cuentas de base de datos utilizadas por la aplicación.
 
----
 
-Ejercicio 3: Blind Injection
+
+``` 
+``` 
+### Ejercicio 3: Blind Injection
 
 Impacto:
 Aunque no se muestra información directa, el atacante puede deducir datos sensibles bit a bit o carácter por carácter, comprometiendo completamente la base de datos.
@@ -162,11 +164,16 @@ Contramedidas:
 -Limitar el tiempo de respuesta y la información devuelta por errores.
 -Monitorear actividad inusual en las consultas SQL.
 
----
-5.🤝 Reflexión Ética del Equipo
+
+
+``` 
+``` 
+### 5.🤝 Reflexión Ética del Equipo
 
 El equipo reconoce que las vulnerabilidades exploradas durante las prácticas, como la inyección SQL, tienen un gran impacto en la seguridad de los sistemas de información. Aunque estas técnicas pueden ser utilizadas con fines maliciosos, nuestro objetivo académico es comprender su funcionamiento para prevenirlas y fortalecer la seguridad en entornos reales.
 
 Realizar pruebas de seguridad de forma responsable implica actuar solo en sistemas propios o con autorización explícita, no divulgar información sensible obtenida durante pruebas, aplicar los conocimientos adquiridos para mejorar la protección de los datos y promover una cultura ética y profesional en el desarrollo de software seguro.
 
 En conclusión, la seguridad informática es tanto una cuestión técnica como moral. Comprender cómo ocurren los ataques nos convierte en mejores profesionales, responsables del diseño de sistemas más seguros y confiables.
+
+``` 
