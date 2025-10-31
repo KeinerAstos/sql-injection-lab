@@ -89,6 +89,7 @@ Ientificamos en el item 5 el resultado de la consulta
 ![alt text](image-6.png)
 
 ### 2.3 Blind SQL Injection
+
 ```
 http://localhost:8000/user/1'%20AND%20(SELECT%20SUBSTR(password,1,1)%20FROM%20users%20WHERE%20username='admin')='a'%20--
 ```
@@ -119,11 +120,9 @@ ChatGPT Plus
 
 Vulnerabilidad (muy breve): Entrada concatenada en la consulta permite SQL Injection — el atacante inyecta una subconsulta ((SELECT COUNT(*) FROM users) > 0) para manipular la lógica y extraer/confirmar datos.
 
-Información filtrada: Devuelve el username ("admin") y la consulta SQL completa, lo que facilita confirmar la existencia de filas, enumerar tablas/columnas y seguir explotando la base de datos.
-``` 
-``` 
-### 2.3 Blind SQL Injection 🧠 Análisis de Impacto y Contramedidas 
+Información filtrada: Devuelve el username ("admin") y la consulta SQL completa, lo que facilita confirmar la existencia de filas, enumerar tablas/columnas y seguir explotando la base de datos. 
 
+### 2.3 Blind SQL Injection 🧠 Análisis de Impacto y Contramedidas 
 
 Ejercicio 1: Login Bypass
 
@@ -136,8 +135,7 @@ Contramedidas:
 -Implementar límites de intentos de login.
 -Evitar mostrar mensajes que revelen información sobre el fallo de autenticación.
 
-``` 
-``` 
+ 
 ### Ejercicio 2: Union-Based
 
 Impacto:
@@ -151,8 +149,8 @@ Contramedidas:
 
 
 
-``` 
-``` 
+ 
+
 ### Ejercicio 3: Blind Injection
 
 Impacto:
@@ -166,8 +164,8 @@ Contramedidas:
 
 
 
-``` 
-``` 
+
+ 
 ### 5.🤝 Reflexión Ética del Equipo
 
 El equipo reconoce que las vulnerabilidades exploradas durante las prácticas, como la inyección SQL, tienen un gran impacto en la seguridad de los sistemas de información. Aunque estas técnicas pueden ser utilizadas con fines maliciosos, nuestro objetivo académico es comprender su funcionamiento para prevenirlas y fortalecer la seguridad en entornos reales.
