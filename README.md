@@ -90,14 +90,94 @@ Ientificamos en el item 5 el resultado de la consulta
 
 ### 2.3 Blind SQL Injection
 ```
-http://localhost:8000/user/1'%20AND%201=1%20--
+http://localhost:8000/user/1'%20AND%20(SELECT%20SUBSTR(password,1,1)%20FROM%20users%20WHERE%20username='admin')='a'%20--
 ```
-![alt text](image-7.png)
+![alt text](image-12.png)
+Vulnerabilidad (muy breve): SQL Injection — la aplicación concatena entradas en la consulta, permitiendo inyectar subconsultas (aquí SUBSTR(password,1,1)) para extraer datos carácter por carácter.
 
+Información que se está filtrando: ya se devuelve el username ("admin") y la inyección demuestra que se pueden obtener caracteres del campo password, por tanto el atacante puede leer la contraseña completa, enumerar tablas/columnas y acceder o modificar datos.
+```
+http://localhost:8000/user/admin'%20OR%20'1'='1-
+```
+![alt text](image-9.png)
+Vulnerabilidad: La aplicación acepta y concatena entrada sin sanitizar en la consulta SQL, permitiendo SQL Injection — el atacante puede alterar la lógica de la consulta y eludir controles (por ejemplo, autenticación).
 
-## 3. Técnicas de Explotación y Evidencias
-[Screenshots y código de payloads utilizados]
-## 4. Análisis de Impacto y Contramedidas
-[Soluciones técnicas propuestas]
+Información filtrada: La respuesta revela el username ("admin") y la propia consulta SQL, confirmando la existencia del usuario y mostrando la estructura de la consulta; con esto un atacante podría leer otros registros, enumerar tablas y potencialmente modificar o borrar datos.
+
+```
+http://localhost:8000/user/'%20OR%201=1%20--
+```
+![alt text](image-10.png)
+Vulnerabilidad (muy breve): La entrada id se concatena directamente en la consulta y el payload '' OR 1=1 -- convierte la condición en siempre verdadera y comenta el resto, permitiendo SQL Injection y eludir la autenticación.
+
+Información filtrada: La respuesta devuelve status, message y el username ("admin") y además muestra la consulta SQL completa, lo que revela la estructura de la consulta y facilita enumerar tablas/columnas o extraer/alterar datos adicionales.
+```
+http://localhost:8000/user/1'%20AND%20(SELECT%20COUNT(*)%20FROM%20users)%3E0%20--
+```
+![alt text](image-11.png)
+ChatGPT Plus
+
+Vulnerabilidad (muy breve): Entrada concatenada en la consulta permite SQL Injection — el atacante inyecta una subconsulta ((SELECT COUNT(*) FROM users) > 0) para manipular la lógica y extraer/confirmar datos.
+
+Información filtrada: Devuelve el username ("admin") y la consulta SQL completa, lo que facilita confirmar la existencia de filas, enumerar tablas/columnas y seguir explotando la base de datos.
+``` 
+
+## 3. Análisis de Impacto y Contramedidas
+## 🧠 Análisis de Impacto y Contramedidas
+
+### 🔹 Ejercicio 1: Login Bypass
+**Impacto:**  
+Esta vulnerabilidad permite evadir los mecanismos de autenticación y acceder al sistema sin credenciales válidas. Un atacante puede iniciar sesión como cualquier usuario, incluso administrador, comprometiendo completamente la aplicación.  
+
+**Información filtrada:**  
+Credenciales de usuario, acceso no autorizado a paneles internos y potencial manipulación de datos.
+
+**Contramedidas:**
+- Implementar **consultas parametrizadas (prepared statements)**.  
+- Validar y sanitizar todas las entradas de usuario.  
+- No mostrar mensajes de error específicos del sistema o base de datos.  
+- Implementar **bloqueo de cuenta** tras múltiples intentos fallidos.
+
+---
+
+### 🔹 Ejercicio 2: Union-Based Injection
+**Impacto:**  
+Permite a un atacante **extraer información confidencial** directamente de la base de datos combinando resultados legítimos con consultas inyectadas. Esto puede incluir usuarios, contraseñas, correos, y otros datos críticos.
+
+**Información filtrada:**  
+Tablas, nombres de columnas, y registros completos de bases de datos sensibles.
+
+**Contramedidas:**
+- Utilizar **ORMs seguros** o consultas preparadas.  
+- Restringir los permisos del usuario de base de datos utilizado por la aplicación.  
+- Validar los tipos de datos esperados (números, texto, etc.).  
+- Implementar un **firewall de aplicaciones web (WAF)**.
+
+---
+
+### 🔹 Ejercicio 3: Blind Injection
+**Impacto:**  
+Permite inferir información de la base de datos **sin recibir mensajes directos del servidor**, utilizando respuestas condicionales (verdadero/falso o tiempos de respuesta). Aunque más lenta, esta técnica puede revelar datos críticos de forma sigilosa.
+
+**Información filtrada:**  
+Estructura de tablas, valores de campos sensibles (como contraseñas o tokens), y metadatos de la base de datos.
+
+**Contramedidas:**
+- Usar **consultas parametrizadas** para todas las operaciones SQL.  
+- Implementar **límites de tiempo y detección de patrones anómalos** en las consultas.  
+- Ocultar detalles del sistema en los mensajes de error y respuestas del servidor.  
+- Aplicar **validación estricta del lado del servidor**.
+
+---
 ## 5. Reflexión Ética del Equipo
-[Consideraciones sobre uso responsables]
+## 🤝 Reflexión Ética del Equipo
+
+El equipo reconoce que las vulnerabilidades exploradas durante las prácticas, como la **inyección SQL**, tienen un gran impacto en la seguridad de los sistemas de información. Aunque estas técnicas pueden ser utilizadas con fines maliciosos, nuestro objetivo académico es **comprender su funcionamiento para prevenirlas y fortalecer la seguridad** en los entornos reales.
+
+Realizar pruebas de seguridad de forma responsable implica:
+- Actuar **solo en sistemas propios o con autorización explícita**.  
+- No divulgar información sensible obtenida durante pruebas.  
+- Aplicar los conocimientos adquiridos para **mejorar la protección de los datos** y no para explotarlos.  
+- Promover una **cultura ética y profesional** en el desarrollo de software seguro.  
+
+En conclusión, **la seguridad informática es tanto una cuestión técnica como moral**. Comprender cómo ocurren los ataques nos convierte en mejores profesionales, responsables del diseño de sistemas más seguros y confiables.
